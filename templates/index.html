@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="mycss.css">
+    <title>
+
+        
+    </title>
+</head>
+<body>
+    
+    {% set vars = namespace(randindex = range(0, 4) | random , 
+        others = range(0, 81) | random, 
+        randweaponnumber = range(0, 81) | random )%}
+
+    <div id = 'quiz'>
+        <img id = 'myimage' src = "{{weapon[vars.randweaponnumber ~ '']['Image']}}"></img>
+        {% for x in range(4) %}
+            {% if(x == vars.randindex) %}
+                <input type="submit" onclick="correct()" value="{{weapon[vars.randweaponnumber ~ '']['Weapon']}}", name = 'answer'/>
+            {%else%}
+                {% if (vars.others == randweaponnumber) %}
+                    {% set vars.others = range(0, 81) | random %}
+                    {% endif %}
+                {% endif %}
+                <input type="submit" onclick="wrong()" value="{{weapon[vars.others ~ '']['Weapon']}}" name = 'wrong' />
+                {% set vars.others = range(0, 81) | random %}
+            {% endfor %}
+  
+    </div>
+    <p id = 'textcounter'>0</p>
+
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+var counter = 0
+function correct() {
+    counter = counter + 1;
+    document.getElementById('textcounter').innerHTML = counter;
+    refresh();
+}
+function refresh()
+{
+    $( "#quiz" ).load(window.location.href + " #quiz" );
+   
+}
+function wrong()
+{
+    console.log('wrong');
+    refresh();
+}
+   
+
+</script>
+    
+  
+    
+    
+</body>
+</html>
